@@ -14,7 +14,7 @@ Example:
 
     <data>
       <title><![CDATA[Button]]></title>
-      <mailto><![CDATA[6epreu@mail.ru]]></mailto>
+      <mailto><![CDATA[mail@example.com]]></mailto>
       <subject><![CDATA[]]></subject>
       <message><![CDATA[]]></message>
     </data>
