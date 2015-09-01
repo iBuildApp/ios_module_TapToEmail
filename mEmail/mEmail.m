@@ -11,7 +11,6 @@
 
 #import "mEmail.h"
 #import "TBXML.h"
-#import "notifications.h"
 
 @interface TPortraitMailVC : MFMailComposeViewController
 @end
@@ -83,7 +82,10 @@
  */
 @property (nonatomic, strong) NSArray          *objContainer;
 
-@property (nonatomic, assign) BOOL              bShowLink;      // YES, if we need to add text "send from iBuildApp" to message
+/**
+ * YES, if we need to add text "send from iBuildApp" to message
+ */
+@property (nonatomic, assign) BOOL              bShowLink;
 @end
 
 @implementation mEmailViewController
@@ -92,7 +94,6 @@ szSubject,
 szMessage,
 szTitle,
 mailViewController,
-parentViewController,
 objContainer,
 bShowLink;
 
@@ -120,7 +121,9 @@ bShowLink;
   self.szMessage    = nil;
   self.szTitle      = nil;
   if ( self.mailViewController )
-    [self.mailViewController dismissModalViewControllerAnimated:YES];
+  {
+    [self.mailViewController dismissViewControllerAnimated:YES completion:nil];
+  }
   self.mailViewController = nil;
   self.objContainer       = nil;
   [super dealloc];
@@ -216,7 +219,6 @@ bShowLink;
 }
 
 /**
- *  Crutch for supporting scenarios.
  *  This does not necessarily call module (i.e. adding viewController to stack may not happen).
  *  For example, if there is a call third-party application, the method returns a pointer to an object of type NSObject.
  *  Otherwise - the caller makes adding view controller in the stack.
@@ -239,8 +241,8 @@ bShowLink;
   if ( ![MFMailComposeViewController canSendMail] )
   {
     /**
-     *  at the moment we can not send email, because likely not available active account.
-     Send user to the mailer.
+     * At the moment we can not send email, because likely not available active account.
+     * Send user to the mailer.
      */
     NSMutableString  *mailto = [NSMutableString stringWithString:@"mailto:"];
     
@@ -302,8 +304,9 @@ bShowLink;
       mailComposer.modalPresentationStyle = UIModalPresentationFormSheet;
     
     self.mailViewController   = mailComposer;
-    [viewController_ presentModalViewController:mailComposer
-                                       animated:YES];
+    [viewController_ presentViewController:mailComposer
+                                  animated:YES
+                                completion:nil];
     
       /// set title for mailViewComposer with dirty hack:
     [[[[mailComposer viewControllers] lastObject] navigationItem] setTitle:self.szTitle];
@@ -323,14 +326,14 @@ bShowLink;
           didFinishWithResult:(MFMailComposeResult)result
                         error:(NSError*)error
 {
-	switch (result)
-	{
-		case MFMailComposeResultCancelled:
-			break;
-		case MFMailComposeResultSaved:
-			break;
-		case MFMailComposeResultSent:
-		{
+  switch (result)
+  {
+    case MFMailComposeResultCancelled:
+      break;
+    case MFMailComposeResultSaved:
+      break;
+    case MFMailComposeResultSent:
+    {
       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
                                                       message:NSLocalizedString(@"mEM_sendingSuccessMessage", @"Thank You - your information has been sent")
                                                      delegate:nil
@@ -338,28 +341,25 @@ bShowLink;
                                             otherButtonTitles:nil];
       [alert show];
       [alert release];
-		}
+    }
       break;
-		case MFMailComposeResultFailed:
-		default:
-		{
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"mEM_sendingErrorTitle", @"Email")
+    case MFMailComposeResultFailed:
+    default:
+    {
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"mEM_sendingErrorTitle", @"Email")
                                                       message:NSLocalizedString(@"mEM_sendingErrorMessage", @"Sending Failed - Unknown Error")
                                                      delegate:nil
                                             cancelButtonTitle:NSLocalizedString(@"mEM_sendingSErrorOkButton", @"OK")
                                             otherButtonTitles:nil];
-			[alert show];
-			[alert release];
-		}
-			
-			break;
-	}
+      [alert show];
+      [alert release];
+    }
+    
+    break;
+  }
   
-	[self.mailViewController dismissModalViewControllerAnimated:YES];
+  [self.mailViewController dismissViewControllerAnimated:YES completion:nil];
   
-    // send notification: objContainer can be dispossed
-  [[NSNotificationCenter defaultCenter] postNotificationName:kAPP_NOTIFICATION_RELEASE_OBJECT
-                                                      object:self.objContainer];
   self.mailViewController = nil;
   self.objContainer = nil;
 }

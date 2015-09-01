@@ -208,7 +208,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "../../libs/nrGridView ../../libs/tbxml/tbxml-headers/ ../../Classes/network ../../Classes/common ../../libs/Facebook/ ../../libs/Twitter+OAuth/SAOAuthTwitterEngine ../../libs/JSON ../../Classes/customControls";
+				USER_HEADER_SEARCH_PATHS = "../../libs/TBXML/TBXML-Headers/";
 				VALID_ARCHS = "armv7 arm64";
 			};
 			name = Debug;
@@ -223,7 +223,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "../../libs/nrGridView ../../libs/tbxml/tbxml-headers/ ../../Classes/network ../../Classes/common ../../libs/Facebook/ ../../libs/Twitter+OAuth/SAOAuthTwitterEngine ../../libs/JSON ../../Classes/customControls";
+				USER_HEADER_SEARCH_PATHS = "../../libs/TBXML/TBXML-Headers/";
 				VALID_ARCHS = "armv7 arm64";
 			};
 			name = Release;
