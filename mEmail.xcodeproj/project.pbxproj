@@ -1,0 +1,255 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		599425AD16808409006628E6 /* mEmail.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 599425AC16808409006628E6 /* mEmail.h */; };
+		599425AF16808409006628E6 /* mEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 599425AE16808409006628E6 /* mEmail.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		599425A216808409006628E6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				599425AD16808409006628E6 /* mEmail.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		599425A416808409006628E6 /* libmEmail.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmEmail.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		599425AB16808409006628E6 /* mEmail-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mEmail-Prefix.pch"; sourceTree = "<group>"; };
+		599425AC16808409006628E6 /* mEmail.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mEmail.h; sourceTree = "<group>"; };
+		599425AE16808409006628E6 /* mEmail.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mEmail.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		599425A116808409006628E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5994259916808409006628E6 = {
+			isa = PBXGroup;
+			children = (
+				599425A916808409006628E6 /* mEmail */,
+				599425A516808409006628E6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		599425A516808409006628E6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				599425A416808409006628E6 /* libmEmail.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		599425A916808409006628E6 /* mEmail */ = {
+			isa = PBXGroup;
+			children = (
+				599425AC16808409006628E6 /* mEmail.h */,
+				599425AE16808409006628E6 /* mEmail.m */,
+				599425AA16808409006628E6 /* Supporting Files */,
+			);
+			path = mEmail;
+			sourceTree = "<group>";
+		};
+		599425AA16808409006628E6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				599425AB16808409006628E6 /* mEmail-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		599425A316808409006628E6 /* mEmail */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 599425B216808409006628E6 /* Build configuration list for PBXNativeTarget "mEmail" */;
+			buildPhases = (
+				599425A016808409006628E6 /* Sources */,
+				599425A116808409006628E6 /* Frameworks */,
+				599425A216808409006628E6 /* CopyFiles */,
+				595BE57716CB6F92000708F1 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = mEmail;
+			productName = mEmail;
+			productReference = 599425A416808409006628E6 /* libmEmail.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5994259B16808409006628E6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = iBuildApp;
+			};
+			buildConfigurationList = 5994259E16808409006628E6 /* Build configuration list for PBXProject "mEmail" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5994259916808409006628E6;
+			productRefGroup = 599425A516808409006628E6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				599425A316808409006628E6 /* mEmail */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		595BE57716CB6F92000708F1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "cp -fR \"$CODESIGNING_FOLDER_PATH\" `echo $PROJECT_DIR | sed 's/appbuilder/appbuilder_server/g'`";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		599425A016808409006628E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				599425AF16808409006628E6 /* mEmail.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		599425B016808409006628E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Debug;
+		};
+		599425B116808409006628E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Release;
+		};
+		599425B316808409006628E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/mEmail.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "mEmail/mEmail-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "../../libs/nrGridView ../../libs/tbxml/tbxml-headers/ ../../Classes/network ../../Classes/common ../../libs/Facebook/ ../../libs/Twitter+OAuth/SAOAuthTwitterEngine ../../libs/JSON ../../Classes/customControls";
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Debug;
+		};
+		599425B416808409006628E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/mEmail.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "mEmail/mEmail-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "../../libs/nrGridView ../../libs/tbxml/tbxml-headers/ ../../Classes/network ../../Classes/common ../../libs/Facebook/ ../../libs/Twitter+OAuth/SAOAuthTwitterEngine ../../libs/JSON ../../Classes/customControls";
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5994259E16808409006628E6 /* Build configuration list for PBXProject "mEmail" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				599425B016808409006628E6 /* Debug */,
+				599425B116808409006628E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		599425B216808409006628E6 /* Build configuration list for PBXNativeTarget "mEmail" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				599425B316808409006628E6 /* Debug */,
+				599425B416808409006628E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5994259B16808409006628E6 /* Project object */;
+}
