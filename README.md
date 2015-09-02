@@ -1,4 +1,4 @@
-# ios_module_TapToEmail
+# iOS module TapToEmail
 Module calls the mail-client with predefined settings
 
 **XML Structure declaration**
