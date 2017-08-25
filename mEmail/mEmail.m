@@ -11,6 +11,7 @@
 
 #import "mEmail.h"
 #import "TBXML.h"
+#import "notifications.h"
 
 @interface TPortraitMailVC : MFMailComposeViewController
 @end
@@ -32,7 +33,7 @@
 {
   return YES;
 }
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
   return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
 }
@@ -82,10 +83,7 @@
  */
 @property (nonatomic, strong) NSArray          *objContainer;
 
-/**
- * YES, if we need to add text "send from iBuildApp" to message
- */
-@property (nonatomic, assign) BOOL              bShowLink;
+@property (nonatomic, assign) BOOL              bShowLink;      // YES, if we need to add text "send from iBuildApp" to message
 @end
 
 @implementation mEmailViewController
@@ -116,17 +114,8 @@ bShowLink;
 
 - (void)dealloc
 {
-  self.szMailtoList = nil;
-  self.szSubject    = nil;
-  self.szMessage    = nil;
-  self.szTitle      = nil;
   if ( self.mailViewController )
-  {
     [self.mailViewController dismissViewControllerAnimated:YES completion:nil];
-  }
-  self.mailViewController = nil;
-  self.objContainer       = nil;
-  [super dealloc];
 }
 
 #pragma mark - 
@@ -219,6 +208,7 @@ bShowLink;
 }
 
 /**
+ *  Crutch for supporting scenarios.
  *  This does not necessarily call module (i.e. adding viewController to stack may not happen).
  *  For example, if there is a call third-party application, the method returns a pointer to an object of type NSObject.
  *  Otherwise - the caller makes adding view controller in the stack.
@@ -241,29 +231,32 @@ bShowLink;
   if ( ![MFMailComposeViewController canSendMail] )
   {
     /**
-     * At the moment we can not send email, because likely not available active account.
-     * Send user to the mailer.
+     *  at the moment we can not send email, because likely not available active account.
+     Send user to the mailer.
      */
     NSMutableString  *mailto = [NSMutableString stringWithString:@"mailto:"];
     
     [mailto appendString:@"?cc="];
-    for( NSString *rcp in self.szMailtoList )
+    for(int i = 0; i < self.szMailtoList.count; i++)
     {
+      NSString *rcp = self.szMailtoList[i];
       [mailto appendString:rcp];
-      [mailto appendString:@","];
+      if(i != self.szMailtoList.count - 1)
+        [mailto appendString:@","];
     }
     if ( [self.szSubject length] )
     {
+      NSString *escapedSubject = [self escapeString:self.szSubject];
       [mailto appendString:@"&subject="];
-      [mailto appendString:self.szSubject];
+      [mailto appendString:escapedSubject];
     }
     if ( [self.szMessage length] )
     {
+      NSString *escapedMessage = [self escapeString:self.szMessage];
       [mailto appendString:@"&body="];
-      [mailto appendString:self.szMessage];
+      [mailto appendString:escapedMessage];
     }
-    NSString *email = [mailto stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mailto]];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"core_cannotSendEmailAlertTitle", @"Mail cannot be send")
                                                     message:NSLocalizedString(@"core_cannotSendEmailAlertMessage", @"This device not configured to send mail")
@@ -271,7 +264,6 @@ bShowLink;
                                           cancelButtonTitle:NSLocalizedString(@"core_cannotSendEmailAlertOkButtonTitle", @"OK")
                                           otherButtonTitles:nil];
     [alert show];
-    [alert release];
     
       // unable to run the module...
     return nil;
@@ -282,8 +274,8 @@ bShowLink;
       // - iPad  : - supporting all screen orientations
       // - iPhone: - supporting only portrait orientation
     MFMailComposeViewController *mailComposer = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ?
-    [[[TPortraitMailVC alloc] init] autorelease] :
-    [[[ MFMailComposeViewController alloc] init] autorelease];
+    [[TPortraitMailVC alloc] init] :
+    [[ MFMailComposeViewController alloc] init];
     if ( !mailComposer )
       return nil;
     
@@ -304,9 +296,7 @@ bShowLink;
       mailComposer.modalPresentationStyle = UIModalPresentationFormSheet;
     
     self.mailViewController   = mailComposer;
-    [viewController_ presentViewController:mailComposer
-                                  animated:YES
-                                completion:nil];
+    [viewController_ presentViewController:mailComposer animated:YES completion:nil];
     
       /// set title for mailViewComposer with dirty hack:
     [[[[mailComposer viewControllers] lastObject] navigationItem] setTitle:self.szTitle];
@@ -321,47 +311,49 @@ bShowLink;
   return nil;
 }
 
+-(NSString *)escapeString:(NSString *)unescapedString {
+
+  NSString *escapedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(__bridge CFStringRef) unescapedString,NULL,CFSTR("!*'\"();:@&=+$,/?%#[]% -._~"),kCFStringEncodingUTF8));
+  
+  return escapedString;
+}
+
 #pragma mark - Mail
 - (void)mailComposeController:(MFMailComposeViewController*)controller
           didFinishWithResult:(MFMailComposeResult)result
                         error:(NSError*)error
 {
-  switch (result)
-  {
-    case MFMailComposeResultCancelled:
-      break;
-    case MFMailComposeResultSaved:
-      break;
-    case MFMailComposeResultSent:
-    {
+	switch (result)
+	{
+		case MFMailComposeResultCancelled:
+			break;
+		case MFMailComposeResultSaved:
+			break;
+		case MFMailComposeResultSent:
+		{
       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
                                                       message:NSLocalizedString(@"mEM_sendingSuccessMessage", @"Thank You - your information has been sent")
                                                      delegate:nil
                                             cancelButtonTitle:NSLocalizedString(@"mEM_sendingSuccessOkButton", @"OK")
                                             otherButtonTitles:nil];
       [alert show];
-      [alert release];
-    }
+		}
       break;
-    case MFMailComposeResultFailed:
-    default:
-    {
-      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"mEM_sendingErrorTitle", @"Email")
+		case MFMailComposeResultFailed:
+		default:
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"mEM_sendingErrorTitle", @"Email")
                                                       message:NSLocalizedString(@"mEM_sendingErrorMessage", @"Sending Failed - Unknown Error")
                                                      delegate:nil
                                             cancelButtonTitle:NSLocalizedString(@"mEM_sendingSErrorOkButton", @"OK")
                                             otherButtonTitles:nil];
-      [alert show];
-      [alert release];
-    }
-    
-    break;
-  }
+			[alert show];
+		}
+			
+			break;
+	}
   
-  [self.mailViewController dismissViewControllerAnimated:YES completion:nil];
-  
-  self.mailViewController = nil;
-  self.objContainer = nil;
+	[self.mailViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
